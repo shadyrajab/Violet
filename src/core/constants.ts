@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import { loadCommands } from '../utils/loadCommands';
-import { loadEmojis } from '../utils/loadEmojis';
+// import { loadEmojis } from '../utils/loadEmojis';
 
 config();
 
@@ -13,4 +13,4 @@ export const SLASH_COMMANDS_DATA = SLASH_COMMANDS.map(
   (command) => command.data,
 );
 
-export const APPLICATION_EMOJIS = loadEmojis();
+// export const APPLICATION_EMOJIS = loadEmojis();

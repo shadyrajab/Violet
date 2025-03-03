@@ -40,18 +40,25 @@ export class TheMovieDBService {
     };
   }
 
-  public async getWatchProvidersLogosJSON(language: string, countryCode: string): Promise<void> {
+  public async getWatchProvidersLogosJSON(
+    language: string,
+    countryCode: string,
+  ): Promise<void> {
     const watchProviders = await this.theMovieDBClient.getAllProviders(
-      language, countryCode
-    )
+      language,
+      countryCode,
+    );
 
-    const providers = watchProviders.results.map((provider) => {
-      const logoUrl = this.theMovieDBClient.tmdbImageCdnURL + provider.logoPath
-      return {
-        attachment: logoUrl,
-        name: provider.logoPath,
-      };
-    }).filter(Boolean);
+    const providers = watchProviders.results
+      .map((provider) => {
+        const logoUrl =
+          this.theMovieDBClient.tmdbImageCdnURL + provider.logoPath;
+        return {
+          attachment: logoUrl,
+          name: provider.logoPath,
+        };
+      })
+      .filter(Boolean);
     const filePath = join(__dirname, '../watchProviders.json');
     writeFileSync(filePath, JSON.stringify(providers, null, 2));
   }
