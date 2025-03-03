@@ -15,6 +15,10 @@ export class TheMovieDBService {
     );
   }
 
+  public get tmdbImageCdnURL() {
+    return this.theMovieDBClient.tmdbImageCdnURL;
+  }
+
   public async searchMovie(
     movieName: string,
     countryCode: string,
