@@ -1,26 +1,12 @@
 import 'reflect-metadata';
 
-import { Client, Interaction } from 'discord.js';
-import { DISCORD_TOKEN, SLASH_COMMANDS_DATA } from './core/constants';
-import { onCommandInteraction } from './events/interactionCommand';
-const client = new Client({ intents: ['GuildMessages'] });
+import { ShardingManager } from 'discord.js';
+import { DISCORD_TOKEN } from './core/constants';
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user?.tag}!`);
-  client.application.commands.set(SLASH_COMMANDS_DATA);
-
-  // APPLICATION_EMOJIS.forEach(async (emoji) => {
-  //   const existingEmojis = await client.application.emojis.fetch();
-  //   if (!existingEmojis.some((e) => e.name === emoji.name)) {
-  //     client.application.emojis.create(emoji);
-  //   }
-  // });
+const manager = new ShardingManager('./dist/infrastructure/client.js', {
+  token: DISCORD_TOKEN,
 });
 
-client.on('interactionCreate', async (interaction: Interaction) => {
-  if (interaction.isCommand()) {
-    onCommandInteraction(interaction);
-  }
-});
+manager.on('shardCreate', (shard) => console.log(`Launched shard ${shard.id}`));
 
-client.login(DISCORD_TOKEN);
+manager.spawn();

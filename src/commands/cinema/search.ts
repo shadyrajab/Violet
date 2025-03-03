@@ -44,7 +44,7 @@ export class SearchMovie implements ISlashCommand {
 
   async execute(interaction: CommandInteraction): Promise<void> {
     const emojis = interaction.client.application.emojis.cache;
-    console.log(interaction.client.application.emojis);
+
     const movieName = interaction.options.get('movie').value.toString();
     const movies = await this.theMovieDBService.searchMovie(movieName, 'BR');
     let currentMovieIndex = 0;
@@ -122,7 +122,6 @@ export class SearchMovie implements ISlashCommand {
   getEmoji(logoPath: string, emojis: Collection<string, ApplicationEmoji>) {
     const emojiName = logoPath.replace('/', '').replace('.jpg', '');
     const emoji = emojis.find((e) => e.name === emojiName);
-    // console.log(emojis);
     return emoji ? `<:${emoji.name}:${emoji.id}>` : '❓';
   }
 
