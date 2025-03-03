@@ -13,7 +13,7 @@
   },
   "scripts": {
     "format": "prettier --write .",
-    "build": "tsc && cp -r src/assets dist/assets",
+    "build": "tsc",
     "clean": "rimraf dist",
     "run": "node dist/index.js",
     "start": "npm run format && npm run clean && npm run build && npm run run"
