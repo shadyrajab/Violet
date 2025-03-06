@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 
 import { Client, Interaction } from 'discord.js';
-import { onCommandInteraction } from '../events/interactionCommand';
+import { onCommandInteraction } from '../events/command.interaction';
 import { DISCORD_TOKEN, SLASH_COMMANDS_DATA } from '../core/constants';
+import { onAutocompleteInteraction } from '../events/autocomplete.interaction';
 
 const client = new Client({ intents: ['GuildMessages'] });
 
@@ -16,6 +17,9 @@ client.on('ready', () => {
 client.on('interactionCreate', async (interaction: Interaction) => {
   if (interaction.isCommand()) {
     onCommandInteraction(interaction);
+  }
+  if (interaction.isAutocomplete()) {
+    onAutocompleteInteraction(interaction);
   }
 });
 

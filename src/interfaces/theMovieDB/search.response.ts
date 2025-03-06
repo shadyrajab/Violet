@@ -1,6 +1,6 @@
 import { CountryWatchOptions } from './movie-providers.response';
 
-export interface MovieResponse {
+export interface SearchMovieResponse {
   page: number;
   results: Movie[];
   totalPages: number;

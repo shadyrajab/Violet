@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-
 import { ShardingManager } from 'discord.js';
 import { DISCORD_TOKEN } from './core/constants';
 

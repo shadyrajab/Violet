@@ -3,7 +3,7 @@ import { SLASH_COMMANDS } from '../core/constants';
 
 export const onCommandInteraction = async (interaction: CommandInteraction) => {
   const command = SLASH_COMMANDS.find(
-    (command) => command.commandData.name === interaction.commandName,
+    (command) => command.data.name === interaction.commandName,
   );
 
   if (command) {

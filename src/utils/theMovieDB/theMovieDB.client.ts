@@ -1,9 +1,10 @@
 import { InternalAxiosRequestConfig } from 'axios';
 import { HttpClient } from '../http/http.client';
-import { MovieResponse } from '../../interfaces/theMovieDB/search.response';
+import { SearchMovieResponse } from '../../interfaces/theMovieDB/search.response';
 import { mapKeysToCamelCase } from '../formatCase';
 import { MovieProvidersResponse } from '../../interfaces/theMovieDB/movie-providers.response';
 import { WatchProvidersResponse } from '../../interfaces/theMovieDB/watch-providers.response';
+import { MovieDetailsResponse } from '../../interfaces/theMovieDB/movie-details.response';
 
 export class TheMovieDBClient extends HttpClient {
   private readonly bearerToken: string;
@@ -33,10 +34,15 @@ export class TheMovieDBClient extends HttpClient {
     return config;
   };
 
-  public async searchMovie(query: string): Promise<MovieResponse> {
+  public async searchMovieByName(name: string): Promise<SearchMovieResponse> {
     const response = await this.instance.get(
-      `/search/movie?query=${query}&language=pt-BR`,
+      `/search/movie?query=${name}&language=pt-BR`,
     );
+    return mapKeysToCamelCase(response);
+  }
+
+  public async searchMovieById(id: number): Promise<MovieDetailsResponse> {
+    const response = await this.instance.get(`/movie/${id}?language=pt-BR`);
     return mapKeysToCamelCase(response);
   }
 

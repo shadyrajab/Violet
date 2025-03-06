@@ -1,9 +1,13 @@
-import { TheMovieDBClient } from '../utils/theMovieDB/theMovieDB.client';
-import { THE_MOVIE_DB_API_KEY, THE_MOVIE_DB_API_URL } from '../core/constants';
-import { MovieResponse } from '../interfaces/theMovieDB/search.response';
-import { MovieProvidersResponse } from '../interfaces/theMovieDB/movie-providers.response';
+import { TheMovieDBClient } from '../../utils/theMovieDB/theMovieDB.client';
+import {
+  THE_MOVIE_DB_API_KEY,
+  THE_MOVIE_DB_API_URL,
+} from '../../core/constants';
+import { SearchMovieResponse } from '../../interfaces/theMovieDB/search.response';
+import { MovieProvidersResponse } from '../../interfaces/theMovieDB/movie-providers.response';
 import { join } from 'path';
 import { writeFileSync } from 'fs';
+import { MovieDetailsResponse } from '../../interfaces/theMovieDB/movie-details.response';
 
 export class TheMovieDBService {
   private theMovieDBClient: TheMovieDBClient;
@@ -19,11 +23,15 @@ export class TheMovieDBService {
     return this.theMovieDBClient.tmdbImageCdnURL;
   }
 
-  public async searchMovie(
+  public getMovieById(id: number): Promise<MovieDetailsResponse> {
+    return this.theMovieDBClient.searchMovieById(id);
+  }
+
+  public async searchMovieByName(
     movieName: string,
     countryCode: string,
-  ): Promise<MovieResponse> {
-    const movies = await this.theMovieDBClient.searchMovie(movieName);
+  ): Promise<SearchMovieResponse> {
+    const movies = await this.theMovieDBClient.searchMovieByName(movieName);
     const moviesWithProviders = await Promise.all(
       movies.results.map(async (movie) => {
         const movieProviders: MovieProvidersResponse =

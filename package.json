@@ -3,8 +3,10 @@
     "axios": "^1.7.9",
     "discord.js": "^14.18.0",
     "dotenv": "^16.4.7",
+    "pg": "^8.13.3",
     "reflect-metadata": "^0.2.2",
-    "tsyringe": "^4.8.0"
+    "tsyringe": "^4.8.0",
+    "typeorm": "^0.3.21"
   },
   "devDependencies": {
     "inquirer": "^12.4.2",

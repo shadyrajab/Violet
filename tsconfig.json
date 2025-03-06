@@ -16,7 +16,9 @@
     "strict": false,
     "esModuleInterop": true,
     "paths": {
-      "tests/*": ["./tests/*"]
+      "tests/*": ["./tests/*"],
+      "@commands": ["./src/commands"],
+      "decorators": ["./src/decorators"]
     },
     "types": ["node"],
     "typeRoots": ["node_modules/@types", "@types"]

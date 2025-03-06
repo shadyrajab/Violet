@@ -3,6 +3,7 @@ import {
   ApplicationCommandOptionData,
   CommandInteraction,
 } from 'discord.js';
+import { CommandValidator } from './command-params.interface';
 
 export interface ICommand {
   name: string;
@@ -27,6 +28,9 @@ export interface ICommandData {
 }
 
 export interface ISlashCommand {
-  execute(interaction: CommandInteraction): Promise<void>;
-  readonly commandData: ICommandData;
+  execute(
+    interaction: CommandInteraction,
+    params?: CommandValidator,
+  ): Promise<void>;
+  readonly data: ICommandData;
 }

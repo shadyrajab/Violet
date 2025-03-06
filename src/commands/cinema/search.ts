@@ -3,7 +3,7 @@ import {
   ICommandData,
   ISlashCommand,
 } from '../../interfaces/command.interface';
-import { TheMovieDBService } from '../../services/theMovieDB.service';
+import { TheMovieDBService } from '../../services/players/theMovieDB.service';
 import {
   ActionRowBuilder,
   ApplicationCommandOptionType,
@@ -26,7 +26,7 @@ export class SearchMovie implements ISlashCommand {
     private theMovieDBService: TheMovieDBService,
   ) {}
 
-  public get commandData(): ICommandData {
+  public get data(): ICommandData {
     return {
       name: 'movie',
       description: 'movie command',
@@ -42,11 +42,14 @@ export class SearchMovie implements ISlashCommand {
     };
   }
 
-  async execute(interaction: CommandInteraction): Promise<void> {
+  public async execute(interaction: CommandInteraction): Promise<void> {
     const emojis = interaction.client.application.emojis.cache;
 
     const movieName = interaction.options.get('movie').value.toString();
-    const movies = await this.theMovieDBService.searchMovie(movieName, 'BR');
+    const movies = await this.theMovieDBService.searchMovieByName(
+      movieName,
+      'BR',
+    );
     let currentMovieIndex = 0;
     let totalPages = movies.results.length;
 
