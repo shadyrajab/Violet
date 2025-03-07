@@ -3,9 +3,10 @@ import { MongoRepository } from 'typeorm';
 import { GuildEntity } from '../database/entities/guild.entity';
 import { Connection } from '../database/datasource';
 
-injectable();
+@injectable()
 export class GuildRepository {
   private guildRepository: MongoRepository<GuildEntity>;
+
   constructor(@inject(Connection.name) private connection: Connection) {
     this.guildRepository = this.connection.guildRepository;
   }
@@ -16,5 +17,9 @@ export class GuildRepository {
 
   async updateGuild(guildId: string, data: Partial<GuildEntity>) {
     await this.guildRepository.update({ guildId }, data);
+  }
+
+  async createGuild(guildId: string) {
+    await this.guildRepository.insert({ guildId });
   }
 }

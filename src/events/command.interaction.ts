@@ -1,8 +1,9 @@
 import { CommandInteraction } from 'discord.js';
-import { SLASH_COMMANDS } from '../core/constants';
+import { getSlashCommands } from '../core/constants';
 
 export const onCommandInteraction = async (interaction: CommandInteraction) => {
-  const command = SLASH_COMMANDS.find(
+  const slashCommands = await getSlashCommands();
+  const command = slashCommands.find(
     (command) => command.data.name === interaction.commandName,
   );
 

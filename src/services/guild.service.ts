@@ -12,6 +12,10 @@ export class GuildService {
     return this.guildRepository.getGuild(guildId);
   }
 
+  async createGuild(guildId: string) {
+    await this.guildRepository.createGuild(guildId);
+  }
+
   async setupCinema(guildId: string, trSetupId: string, cinemaSetupId: string) {
     await this.guildRepository.updateGuild(guildId, {
       trSetupId,

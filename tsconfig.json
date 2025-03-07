@@ -18,7 +18,7 @@
     "paths": {
       "tests/*": ["./tests/*"],
       "@commands": ["./src/commands"],
-      "decorators": ["./src/decorators"]
+      "@decorators": ["./src/decorators"]
     },
     "types": ["node"],
     "typeRoots": ["node_modules/@types", "@types"]

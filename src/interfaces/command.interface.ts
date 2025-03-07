@@ -20,9 +20,16 @@ export interface CommandRegistration {
   data: ApplicationCommandDataResolvable;
 }
 
+export interface CommandPermissions {
+  some?: string[];
+  all?: string[];
+  none?: string[];
+}
+
 export interface ICommandData {
   name: string;
   description: string;
+  permissions?: CommandPermissions;
   options?: ApplicationCommandOptionData[];
   category?: string;
 }

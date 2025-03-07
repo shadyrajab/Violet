@@ -21,7 +21,8 @@ export class CinemaSetup {
     const { cinemaSetupId, cinemaCategoryId } =
       await this.guildService.getGuild(guildId);
 
-    if (cinemaSetupId && cinemaCategoryId) throw new CommandError('Cinema already setup', interaction);
+    if (cinemaSetupId && cinemaCategoryId)
+      throw new CommandError('Cinema already setup', interaction);
 
     const category = await guild?.channels.create({
       name: 'CINEMA',

@@ -23,10 +23,14 @@ export class Host implements ISlashCommand {
     private theMovieDBService: TheMovieDBService,
     @inject(GuildService.name) private guildService: GuildService,
   ) {}
+
   public get data(): ICommandData {
     return {
       name: 'host',
       description: 'host command',
+      permissions: {
+        some: ['Administrator'],
+      },
       category: 'cinema',
       options: [
         {
@@ -65,7 +69,8 @@ export class Host implements ISlashCommand {
 
     const { cinemaCategoryId } = await this.guildService.getGuild(guildId);
 
-    if (!cinemaCategoryId) throw new CommandError('Cinema not setup', interaction);
+    if (!cinemaCategoryId)
+      throw new CommandError('Cinema not setup', interaction);
 
     const eventChannel = await guild.channels.create({
       name: title,

@@ -2,25 +2,33 @@ import 'reflect-metadata';
 
 import { Client, Interaction } from 'discord.js';
 import { onCommandInteraction } from '../events/command.interaction';
-import { DISCORD_TOKEN, SLASH_COMMANDS_DATA } from '../core/constants';
+import { DISCORD_TOKEN, getSlashCommandsData } from '../core/constants';
 import { onAutocompleteInteraction } from '../events/autocomplete.interaction';
+import { initializeContainer } from './container-config';
 
-const client = new Client({ intents: ['GuildMessages'] });
+async function startClient() {
+  await initializeContainer();
 
-client.on('ready', () => {
-  console.log(
-    `Logged in as ${client.user?.tag} with ${client.shard?.count} total shards`,
-  );
-  client.application.commands.set(SLASH_COMMANDS_DATA);
-});
+  const client = new Client({ intents: ['GuildMessages'] });
 
-client.on('interactionCreate', async (interaction: Interaction) => {
-  if (interaction.isCommand()) {
-    onCommandInteraction(interaction);
-  }
-  if (interaction.isAutocomplete()) {
-    onAutocompleteInteraction(interaction);
-  }
-});
+  client.on('ready', async () => {
+    console.log(
+      `Logged in as ${client.user?.tag} with ${client.shard?.count} total shards`,
+    );
+    const commandsData = await getSlashCommandsData();
+    await client.application.commands.set(commandsData);
+  });
 
-client.login(DISCORD_TOKEN);
+  client.on('interactionCreate', async (interaction: Interaction) => {
+    if (interaction.isCommand()) {
+      onCommandInteraction(interaction);
+    }
+    if (interaction.isAutocomplete()) {
+      onAutocompleteInteraction(interaction);
+    }
+  });
+
+  client.login(DISCORD_TOKEN);
+}
+
+startClient().catch(console.error);

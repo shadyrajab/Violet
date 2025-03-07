@@ -15,10 +15,22 @@ export class Connection {
       synchronize: true,
       logging: true,
       entities: [GuildEntity],
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      authSource: 'admin',
     });
   }
 
+  public async initialize() {
+    if (!this.dataSource.isInitialized) {
+      await this.dataSource.initialize();
+    }
+  }
+
   public get guildRepository(): MongoRepository<GuildEntity> {
+    if (!this.dataSource.isInitialized) {
+      throw new Error('DataSource não foi inicializado');
+    }
     return this.dataSource.getMongoRepository(GuildEntity);
   }
 }
